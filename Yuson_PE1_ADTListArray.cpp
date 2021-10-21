@@ -1,23 +1,29 @@
+// Yuson, Ike Gabriel
+// Honor Statement: Upon our honor, we have accomplished this Laboratory Exercise relying upon our own honest efforts without cheating.
+
+// List: Array Implementation
 #include <iostream>
 #include <iomanip>
 
 using namespace std;
-#define MAXSIZE 100
+#define MAXSIZE 100 // Define array size
 
+// Creates a class called list
 class List {
 public:
     int items[MAXSIZE];
     int end;
 };
 
-void Insert(int, int, int, List *);
+void Insert(int, int, int, List *); // Function that inserts a value to the list
 
-void Delete(int, List *);
+void Delete(int, List *); // Function that deletes a value in the list
 
-void DeleteList(List *);
+void DeleteList(List *); // Function that removes the entire list
 
-void DisplayList(List *);
+void DisplayList(List *); // Function that display the entire list
 
+// Input validator if user inputs a character/string
 int Validator() {
   int num;
   while (!(cin >> setw(1) >> num)) {
@@ -31,24 +37,16 @@ int Validator() {
   return num;
 }
 
-int PositionValidator(List *list) {
-  int position = Validator();
-  while (position < 0 || position < list->end + 1) {
-    cout << "Position does not exist in list." << endl;
-    cout << "Enter a position where you want to insert that number: " << endl;
-    position = Validator();
-    cout << "\n" << endl;
-  }
-  return position;
-}
-
+// Main function
 int main() {
-  List list;
-  list.end = -1;
+  List list; // Creates a list object
+  list.end = -1; // Sets the array to -1 which means that list is empty
 
   int answer;
   do {
-    int choice, number, position;
+    int choice, number, position; // Initialization of variables
+
+    // Menu
     cout << "[1] Add Item" << endl;
     cout << "[2] Delete Item" << endl;
     cout << "[3] Display List" << endl;
@@ -58,7 +56,7 @@ int main() {
     answer = Validator();;
 
     switch (answer) {
-      case 1:
+      case 1: // Choice that calls the insert function
         if (list.end == MAXSIZE){
           cout << "List is already full!" << endl;
           break;
@@ -68,47 +66,47 @@ int main() {
         cout << "[2] End of the list" << endl;
         cout << "[3] Specific position" << endl;
         cout << "\nEnter choice: ";
-        choice = Validator();
+        choice = Validator(); // Passes user input to validator
 
         switch (choice) {
-          case 1:
+          case 1: // Choice that calls the insert function that inserts item at the start of the list
             cout << "Enter a number: ";
-            number = Validator();
+            number = Validator(); // Passes user input to validator
             Insert(number, 1, 0, &list);
             break;
-          case 2:
+          case 2: // Choice that calls the insert function that inserts item at the end of the list
             cout << "Enter a number: ";
             number = Validator();
             Insert(number, 2, 0, &list);
             break;
-          case 3:
+          case 3: // Choice that calls the insert function that inserts item at a specific position in the list
             cout << "Enter a number: ";
-            number = Validator();
+            number = Validator(); // Passes user input to validator
             cout << "Enter a position where you want to insert that number: ";
-            position = PositionValidator(&list);
+            position = Validator(); // Passes user input to validator
             Insert(number, 3, position, &list);
             break;
-          default:
+          default: // Catches error if user input is invalid
             cout << "Invalid input.\n" << endl;
             break;
         }
         break;
-      case 2:
+      case 2: // Choice that that calls the delete function
         if (list.end == -1) {
           cout << "List is empty\n" << endl;
           break;
         }
         cout << "Enter a number you wish to delete: ";
-        number = Validator();
+        number = Validator(); // Passes user input to validator
         Delete(number, &list);
         break;
-      case 3:
+      case 3: // Choice that calls the display function
         if (list.end == -1)
           cout << "List is empty\n" << endl;
         else
           DisplayList(&list);
         break;
-      case 4:
+      case 4: // Choice that calls the delete function
         if (list.end == -1){
           cout << "List is empty\n" << endl;
           break;
@@ -116,9 +114,9 @@ int main() {
 
         DeleteList(&list);
         break;
-      case 0:
+      case 0: // Choice that exits the program
         break;
-      default:
+      default: // Catches error if user input is invalid
         cout << "Invalid input.\n" << endl;
         break;
     }
@@ -143,6 +141,11 @@ void Insert(int number, int choice, int position, List *list) {
       if (position == 0) {
         list->end += 1;
         list->items[position] = number;
+        break;
+      }
+      if (position >= list->end+1 || position < 0){
+        list->end += 1;
+        list->items[list->end] = number;
         break;
       }
       for (int i = list->end; i >= position; i--) {

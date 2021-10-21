@@ -1,14 +1,20 @@
+// Yuson, Ike Gabriel
+// Honor Statement: Upon our honor, we have accomplished this Laboratory Exercise relying upon our own honest efforts without cheating.
+
+// List: Array Implementation
 #include "iostream"
 #include  "iomanip"
 
 using namespace std;
 
+// Creates a class called Node
 class Node{
 public:
     int data;
     Node* next;
 };
 
+// Input validator if user inputs a character/string
 int Validator() {
   int num;
   while (!(cin >> setw(1) >> num)) {
@@ -22,19 +28,19 @@ int Validator() {
   return num;
 }
 
-Node* Insert (int, int, int, Node*);
-Node* Delete (int, Node*);
-Node* DeleteList (Node*);
-void DisplayList (Node*);
+Node* Insert (int, int, int, Node*); // Function that deletes a value in the list
+Node* Delete (int, Node*); // Function that deletes a value in the list
+Node* DeleteList (Node*); // Function that removes the entire list
+void DisplayList (Node*); // Function that display the entire list
 
 
-
+// Main function
 int main(){
-  Node* head = nullptr;
+  Node* head = nullptr; // Creates a Node object named head that is set to Null
 
   int answer;
   do {
-    int choice, number, position;
+    int choice, number, position; // Initialization of variables
     cout << "[1] Add Item" << endl;
     cout << "[2] Delete Item" << endl;
     cout << "[3] Display List" << endl;
@@ -44,30 +50,29 @@ int main(){
     answer = Validator();;
 
     switch (answer) {
-      case 1:
+      case 1: // Choice that calls the insert function
         cout << "[1] Start of the list" << endl;
         cout << "[2] End of the list" << endl;
         cout << "[3] Specific position" << endl;
         cout << "\nEnter choice: ";
-        choice = Validator();
+        choice = Validator(); // Passes user input to validator
 
         switch (choice) {
-          case 1:
+          case 1: // Choice that calls the insert function that inserts item at the start of the list
             cout << "Enter a number: ";
-            number = Validator();
+            number = Validator(); // Passes user input to validator
             head = Insert(number, 1, 0, head);
             break;
-          case 2:
+          case 2: // Choice that calls the insert function that inserts item at the end of the list
             cout << "Enter a number: ";
-            number = Validator();
+            number = Validator(); // Passes user input to validator
             head = Insert(number, 2, 0, head);
             break;
-          case 3:
+          case 3: // Choice that calls the insert function that inserts item at a specific position in the list
             cout << "Enter a number: ";
-            number = Validator();
+            number = Validator(); // Passes user input to validator
             cout << "Enter a position where you want to insert that number: ";
-            cin >> position;
-//            position = PositionValidator(&head);
+            position = Validator(); // Passes user input to validator
             head = Insert(number, 3, position, head);
             break;
           default:
@@ -75,12 +80,12 @@ int main(){
             break;
         }
         break;
-      case 2:
+      case 2: // Choice that that calls the delete function
         cout << "Enter a number you wish to delete: ";
-        number = Validator();
+        number = Validator(); // Passes user input to validator
         head = Delete(number, head);
         break;
-      case 3:
+      case 3: // Choice that calls the display function
         if (head == nullptr){
           cout << "List is empty\n" << endl;
           break;
@@ -88,12 +93,12 @@ int main(){
 
         DisplayList(head);
         break;
-      case 4:
+      case 4: // Choice that calls the display function
         head = DeleteList(head);
         break;
-      case 0:
+      case 0: // Choice that exits the program
         break;
-      default:
+      default: // Catches error if user input is invalid
         cout << "Invalid input.\n" << endl;
         break;
     }
@@ -144,7 +149,7 @@ Node* Insert(int number, int choice, int position, Node* head){
         return head;
       }
 
-      if(position >= counter+1){
+      if(position >= counter+1 || position < 1){
         if(head == nullptr){
           head = newnode;
           return head;
